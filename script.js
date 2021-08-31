@@ -64,7 +64,6 @@ const handleAccess = (ip) => {
 
 
 const preAuth = () => {
-    if (storage.getItem('key') == null) {
         axios.get('http://192.168.0.1:3000/clients').then(function(response){
         const u = response.data.find( u => u.ip == uniqueIP) 
         console.log(u);
@@ -75,13 +74,11 @@ const preAuth = () => {
             }
             storage.setItem('key', JSON.stringify(obj));
             location.reload();
-        } else {
-            handleAccess('109.98.33.51');
         }
+        handleAccess('109.98.33.51');
+        
      }).catch(function (error) {alert('test')});
-    } else {
-        handleAccess('109.98.33.51')
-    }
+
     
 }
 
