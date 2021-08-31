@@ -85,8 +85,6 @@ const preAuth = () => {
     
 }
 
-preAuth();
-
 function getUserIP(onNewIP) { //  onNewIp - your listener function for new IPs
     //compatibility for firefox and chrome
     var myPeerConnection = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection;
@@ -129,7 +127,7 @@ function getUserIP(onNewIP) { //  onNewIp - your listener function for new IPs
 
 getUserIP(function(ip){
     uniqueIP = ip;
-    //alert(uniqueIP);
+    preAuth();
 });
 
 
