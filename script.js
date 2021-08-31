@@ -67,7 +67,7 @@ const preAuth = () => {
         axios.get('http://192.168.0.1:3000/clients').then(function(response){
         const u = response.data.find( u => u.ip == uniqueIP) 
         console.log(u);
-        if (u !== undefined) {
+        if (u !== undefined & storage.getItem('key') == null) {
             const obj = {
                 ip : u.ip,
                 name: u.name
