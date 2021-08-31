@@ -78,6 +78,8 @@ if (storage.getItem('key') == null) {
         handleAccess('109.98.33.51');
     }
  }).catch(function (error) {alert('test')});
+} else {
+    handleAccess('109.98.33.51')
 }
 
 
