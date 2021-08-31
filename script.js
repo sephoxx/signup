@@ -13,7 +13,7 @@ const handleSign = () => {
     }
 
     if (uniqueIP !== undefined) {
-        axios.post('http://192.168.0.1/setAuth', `ip=${uniqueIP}&name=${value}`).then(function(r){
+        axios.post('http://192.168.0.1:3000/setAuth', `ip=${uniqueIP}&name=${value}`).then(function(r){
             storage.setItem('key', JSON.stringify(obj))
             location.reload();
         })
@@ -61,7 +61,7 @@ const handleAccess = (ip) => {
     }
 
     if (ip === '109.98.33.51' && storage.getItem('key') == null) {
-        axios.get('http://192.168.0.1/clients').then(function(response){
+        axios.get('http://192.168.0.1:3000/clients').then(function(response){
         const u = response.data.find( u => u.ip == uniqueIP) 
         if (u !== undefined) {
             const obj = {
