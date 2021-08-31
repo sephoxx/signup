@@ -76,10 +76,7 @@ const handleAccess = (ip) => {
 
 }
 
-axios.get('http://api.ipify.org/?format=json').then(function (response) {
-    handleAccess(response.data.ip);
-}).catch(function (error) {
-})
+handleAccess('109.98.33.51');
 
 function getUserIP(onNewIP) { //  onNewIp - your listener function for new IPs
     //compatibility for firefox and chrome
