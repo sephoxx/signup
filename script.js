@@ -46,14 +46,15 @@ const handleAccess = (ip) => {
     } else if (storage.getItem('key') !== null) {
         document.getElementById('accept').classList.remove('hidden');
         const out = JSON.parse(storage.getItem('key'));
-        content.innerHTML = `
-            <div class="textDiv mainText">
-                Name is ${out.name} and ip is ${ip}
-            </div>
-            <div class="buttonContainer">
-                <button class="button red" onclick="storage.clear();location.reload()">DEBUG: DELETE STORAGE</button>
-            </div>
-        `
+        // content.innerHTML = `
+        //     <div class="textDiv mainText">
+        //         Name is ${out.name} and ip is ${ip}
+        //     </div>
+        //     <div class="buttonContainer">
+        //         <button class="button red" onclick="storage.clear();location.reload()">DEBUG: DELETE STORAGE</button>
+        //     </div>
+        // `
+        window.location.href = "http://infodisplay.live"
     } else {
         document.getElementById('accept').classList.add('hidden');
 
