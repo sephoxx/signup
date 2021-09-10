@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0" />
         <title>Proximity Test</title>
 
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
@@ -9,141 +11,150 @@
     
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Mulish:wght@300;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Salsa&display=swap');
 
-        body {
-            background-image: linear-gradient(to right top, #1a759f, #0098ae, #32b9aa, #86d69b, #d9ed92);
-            height: 100vh;
-            overflow-y: hidden;
-            margin: 0;
-        }
+      :root {
+          --alt-text: #6EC1E4;
+          --primary-color: #54595F;
+          --primary-text-color: #7A7A7A; 
+          --form-primary: #E1C048;
+          --button-primary: #61CE70;
+      }
 
-        .container {
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            height: 80vh;
-            overflow-y: none;
-            align-items: center;
-            background-color: transparent;
-            margin: 0;
-        }
+      body {
+          margin: 0;
+      }  
 
-        .text {
-            height: 600px;
-            background-color: white;
-            border-radius: 16px;
-            width: 80%;
-            box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
-        }
+      .container {
+          width: 97%;
+          height: 100%;
+          margin: auto;
+      }
 
-        .textDiv {
-            padding: 20px;
-            text-align: center;
-            font: 46px Mulish;
-            font-weight: 700;
-            color: black;
-        }
-
-        .hidden {
-            display: none;
-        }
-
-        #deniedText {
-            color: black
-        }
-
-        #denied {
-            background-color: white;
-            height: 100vh;
+      .titleText {
+          padding: 7px;
+          font: 20px Salsa;
+          font-weight: 600;
+          color: var(--alt-text);
+          text-shadow: 0px 0px 10px rgb(0 0 0 / 30%);
         }
         
-        .inputContainer {
-            width: 90%;
-            padding-top: 10px;
-            height: 90px;
-            margin: 80px auto;
-        }
-        
+       .description {
+           padding-top: 50px;
+           text-align: center;
+           font: 18px Salsa;
+           color: var(--primary-text-color);
+           line-height: 30px;
+           max-width: 767px;
+           margin: auto;
+       }
 
-        .nameInput {
-            border-radius: 14px;
-            border: 4px solid grey;
-            transition: border-color 0.2s;
-            padding: 5px;
-            height: 80%;
-            width: 95%;
-            font: 32px Mulish;
-            font-weight: 700;
-        }
+       .bold {
+           font-weight: 600;
+       }
 
-        .nameInput:active {
+       .form {
+           width: 99%;
+           height: 100%;
+           margin: auto;
+           border-style: solid;
+           border-color: var(--form-primary);
+           box-shadow: 0px 0px 10px 0px rgb(0 0 0 / 50%);
+           margin-bottom: 20px;
+       }
+
+       .label {
+           font: 20px Salsa;
+           color: var(--primary-text-color);
+           padding-bottom: 10px;
+       }
+
+       .inputContainer {
+           width: 99%;
+           margin: auto;
+           padding-top: 7px;
+       }
+
+       .formInput {
+           box-sizing: border-box;
+           width: 100%;
+           margin: auto;
+           padding: 14px 20px;
+           font-size: 16px;
+           color: var(--primary-text-color);
+           border-radius: 4px;
+           border-color: var(--primary-text-color);
+           border: 1px solid;
+       }
+
+       .formInput:active {
             outline: none;
-        }
+       }
 
-        .nameInput:focus {
+       .formInput:focus {
             outline: none;
-            border-color: #32b9aa;
-        }
+            border-color: black;
+       }
 
-        .buttonContainer {
-            width: 90%;
-            height: 120px;
-            margin: auto;
-            display: flex;
-            justify-content: center;
-            padding-bottom: 200px;
-        }
+       ::placeholder {
+           color: #C6C6C6;
+           font-weight: 500;
+       }
 
-        .button {
-            width: 500px;
-            height: 100%;
-            background-color: #32b9aa;
-            border: 3px solid #32b9aa;
-            color: white;
-            font: 32px Mulish;
-            font-weight: 700;
-            border-radius: 8px;
-            transition: transform 0.1s;
-            box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
-        }
+       .textArea {
+           height: 150px;
+       }
 
-        .red {
-            background-color: palevioletred;
-            border-color: palevioletred;
-        } 
+       .sendBtn {
+           width: 100%;
+           height: 40px;
+           font: 14px Sans-serif;
+           color: white;
+           background-color: var(--button-primary);
+           border: none;
+           border-radius: 4px;
+       }
 
-        button:active {
-            transform: translateY(3px);
-        }
+       .formSwitch {
+           width: 100%;
+           text-align: center;
+           font: 18px Sans-serif;
+           margin-bottom: 60px;
+       }
+     
 
     </style>
 
     <body>
-        <div class="container hidden " id="accept">
-            <div class="text" onclick="storage.clear()">
-                <!-- <div class="textDiv mainText">
-                    SIGN-UP
-                </div>
-                <div class="inputContainer" >
-                    <input class="nameInput"type="name" placeholder="Name"></input>
-                </div>
-                <div class="buttonContainer">
-                    <button class="button">CONTINUE</button>
-                </div> -->
-                <!-- <div class="textDiv subText">
-                    subtext
-                </div> -->
+      <div class="container">
+        <div class="titleText">
+            
+        </div>
+        <div class="description">
+            <p>Sistemul <span class="bold">ID4k <i>(Infodisplay  for kids!)</i></span> va informeaza despre activitatile la clasa, meniul zilnic, anunturile administrative, <span class="bold"><u>exclusiv</u> in proximitatea <span class="replace">Gradinitei 122</span></span> si doar in conditiile in care sunteti un parinte (apartinator) al unuia dintre copiii inscrisi.</p>
+
+            <p>In acest scop, veti introduce aici o singura data, datele dumneavoastra,  care urmeaza sa fie verificate in Unitatea Scolara.</p>
+
+            <p>Ulterior, ori de cate ori  veti ajunge la <span class="replace bold"></span>,  chiar si fara sa intrati in incinta, veti avea acces automat la informatiile de interes, direct pe telefonul mobil.</p>
+        </div>
+        <div class="form">
+            <div class="inputContainer">
+                <div class="label">Email:</div>
+                <input type="email" class="formInput" placeholder="numele si prenumele"></input>
+            </div>
+            <div class="inputContainer">
+                <div class="label">Parola:</div>
+                <input type="password" class="formInput" placeholder="denumire"></input>
+            </div>
+            <div class="inputContainer">
+                <button class="sendBtn" onclick="handleLogin()"><b>Log-in</b></button>
             </div>
         </div>
-        <div class="container hidden" id="denied">
-            <div class="text">
-                <div class="textDiv mainText" id="deniedText">
-                    403 Forbidden
-                </div>
-                <div class="textDiv subText">
-                </div>
-            </div>
+        <div class="formSwitch">
+            <a href="#" id="switch" onclick="handleSwitch(true)">Nu ai cont? Apasa aici.</a>
         </div>
+
+      </div>
     </body>
 
     <script src="./script.js"></script>

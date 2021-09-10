@@ -1,134 +1,170 @@
+var owner = ['Gradinita 122', 'Gradinitei 122'] //change this depending on school
+
 var storage = window.localStorage;
-var subtext = document.getElementsByClassName('subText')[0];
-var uniqueIP;
+// Preload
 
+document.getElementsByClassName('titleText')[0].innerHTML = owner[0];
+document.getElementsByClassName('replace')[0].innerHTML= owner[1];
+document.getElementsByClassName('replace')[1].innerHTML= owner[0];
 
+// Post-Authentication
 
-
-const handleSign = () => {
-    const value = document.getElementsByClassName('nameInput')[0].value;
-    const obj = {
-        ip: uniqueIP,
-        name: value
-    }
-
-    if (uniqueIP !== undefined) {
-        axios.post('http://192.168.0.1:3000/setAuth', `ip=${uniqueIP}&name=${value}`).then(function(r){
-            storage.setItem('key', JSON.stringify(obj))
-            location.reload();
-        })
-    }
+const postAuth = (response) => {
+    document.documentElement.innerHTML= response.data;
 }
 
-const handleAccess = (ip) => {
-    const content = document.getElementsByClassName('text')[0]
+// Main
 
-    if (ip === '109.98.33.51' && storage.getItem('key') == null) {
-        document.getElementById('accept').classList.remove('hidden');
-        //storage.setItem('key', 'accessToken');
-        //subtext.innerHTML = 'generated key succesfully!'
-
-        content.innerHTML = `
-            <div class="textDiv mainText">
-             SIGN-UP
-            </div>
-            <div class="inputContainer" >
-                <input class="nameInput"type="name" placeholder="Name"></input>
-            </div>
-            <div class="buttonContainer">
-                <button class="button" onclick="handleSign()">CONTINUE</button>
-            </div>
-            <div class="buttonContainer">
-                <button class="button red" onclick="storage.clear();location.reload()">DEBUG: DELETE STORAGE</button>
-            </div>
+const handleSwitch = (isLogin = false) => {
+    const form = document.getElementsByClassName('form')[0];
+    const formSwitch = document.getElementById('switch');
+    
+    if (isLogin) {
+        form.innerHTML = `
+        <div class="inputContainer">
+        <div class="label">Nume si prenume parinte:</div>
+        <input type="name" class="formInput" placeholder="numele si prenumele"></input>
+        </div>
+        <div class="inputContainer">
+        <div class="label">Clasa/grupa la care este inscris copilul :
+        </div>
+        <input type="text" class="formInput" placeholder="denumire"></input>
+        </div>
+        <div class="inputContainer">
+        <div class="label">Adresa de email:</div>
+        <input type="email" class="formInput" placeholder="email"></input>
+        </div>
+        <div class="inputContainer">
+        <div class="label">Parlola:</div>
+        <input type="password" class="formInput" placeholder="parola"></input>
+        </div>
+        <div class="inputContainer">
+        <div class="label">Confirmare Parola:</div>
+        <input type="password" class="formInput" placeholder="confirmare parola"></input>
+        </div>
+        <div class="inputContainer">
+        <div class="label">Acord de informare digitala:</div>
+        <textarea type="text" class="formInput textArea" placeholder="sunt de acord cu informarea in sistem digital in proximitatea Unitatii Scolare"></textarea>
+        </div>
+        <div class="inputContainer">
+        <button class="sendBtn" onclick="handleSign()"><b>Send</b></button>
+        </div>
         `
 
-    } else if (storage.getItem('key') !== null) {
-        document.getElementById('accept').classList.remove('hidden');
-        const out = JSON.parse(storage.getItem('key'));
-        // content.innerHTML = `
-        //     <div class="textDiv mainText">
-        //         Name is ${out.name} and ip is ${ip}
-        //     </div>
-        //     <div class="buttonContainer">
-        //         <button class="button red" onclick="storage.clear();location.reload()">DEBUG: DELETE STORAGE</button>
-        //     </div>
-        // `
-        window.location.href = "http://infodisplay.live"
+        formSwitch.setAttribute('onclick', 'handleSwitch()');
+        formSwitch.innerText = 'Ai cont? Apasa aici.';
     } else {
-        document.getElementById('accept').classList.add('hidden');
+        form.innerHTML = `
+        <div class="inputContainer">
+        <div class="label">Email:</div>
+        <input type="email" class="formInput" placeholder="numele si prenumele"></input>
+        </div>
+        <div class="inputContainer">
+        <div class="label">Parola:</div>
+        <input type="password" class="formInput" placeholder="denumire"></input>
+        </div>
+        <div class="inputContainer">
+        <button class="sendBtn" onclick="loginSubmit()"><b>Log-in</b></button>
+        </div>        
+        `
 
-        document.getElementById('denied').classList.remove('hidden');
+        formSwitch.setAttribute('onclick', 'handleSwitch(true)');
+        formSwitch.innerText = 'Nu ai cont? Apasa aici.';
     }
-
 }
 
+handleSwitch();
 
-const preAuth = () => {
-        axios.get('http://192.168.0.1:3000/clients').then(function(response){
-        const u = response.data.find( u => u.ip == uniqueIP) 
-        console.log(u);
-        if (u !== undefined & storage.getItem('key') == null) {
-            const obj = {
-                ip : u.ip,
-                name: u.name
-            }
-            storage.setItem('key', JSON.stringify(obj));
-            location.reload();
-        }
-        handleAccess('109.98.33.51');
-        
-     }).catch(function (error) {alert('test')});
+const handleSign = () => {
+    const inputs = document.getElementsByClassName('formInput');
+    let ok = true;
 
-    
-}
+    Array.from(inputs).forEach(i => {
+        if (i.value === "") {
+            ok = false;
+        }   
+    })
 
-function getUserIP(onNewIP) { //  onNewIp - your listener function for new IPs
-    //compatibility for firefox and chrome
-    var myPeerConnection = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection;
-    var pc = new myPeerConnection({
-        iceServers: []
-    }),
-    noop = function() {},
-    localIPs = {},
-    ipRegex = /([0-9]{1,3}(\.[0-9]{1,3}){3}|[a-f0-9]{1,4}(:[a-f0-9]{1,4}){7})/g,
-    key;
-
-    function iterateIP(ip) {
-        if (!localIPs[ip]) onNewIP(ip);
-        localIPs[ip] = true;
+    if (inputs[3].value.length < 7) {
+        ok = false;
+        alert('Parola prea scurta ( minim 7 caractere )');
+        return;
     }
 
-     //create a bogus data channel
-    pc.createDataChannel("");
+    if (ok) {
+        initAuth(inputs);
+    } else {
+        alert('Te rugam sa completezi toate campurile');
+        return;
+    }
+}
 
-    // create offer and set local description
-    pc.createOffer().then(function(sdp) {
-        sdp.sdp.split('\n').forEach(function(line) {
-            if (line.indexOf('candidate') < 0) return;
-            line.match(ipRegex).forEach(iterateIP);
-        });
-        
-        pc.setLocalDescription(sdp, noop, noop);
-    }).catch(function(reason) {
-        // An error occurred, so handle the failure to connect
+const loginSubmit = () => {
+    inputs = document.getElementsByClassName('formInput');
+    const data = {
+        email: inputs[0].value,
+        password: btoa(inputs[1].value)
+    }
+
+    console.log(data);
+
+    handleLogin(data);
+}
+
+const handleLogin = (data = {}) => {
+    console.log(data)
+    axios.post('http://192.168.0.1:3000/login', `email=${data.email}&password=${data.password}`).then(function (response) {
+        storage.setItem('credentials', JSON.stringify(data));
+        postAuth(response);
+    }).catch(function (error) {
+        alert("Datele introduse sunt gresite.");
+        console.log(error);
     });
-
-    //listen for candidate events
-    pc.onicecandidate = function(ice) {
-        if (!ice || !ice.candidate || !ice.candidate.candidate || !ice.candidate.candidate.match(ipRegex)) return;
-        ice.candidate.candidate.match(ipRegex).forEach(iterateIP);
-    };
 }
 
-// Usage
+const initAuth = (inputs = []) => {
 
-getUserIP(function(ip){
-    uniqueIP = ip;
-    preAuth();
-});
+    let ok = checkPassword(inputs[3].value, inputs[4].value);
+
+    if (ok) {
+        let obj = {
+            name: inputs[0].value,
+            childClass : inputs[1].value,
+            email: inputs[2].value,
+            password: checkPassword(inputs[3].value, inputs[4].value),
+            gdpr: inputs[5].value
+        }
+    
+        axios.post('http://192.168.0.1:3000/setAuth', `name=${obj.name}&email=${obj.email}&password=${obj.password}`).then(function (respone) {
+            storage.setItem('credentials', JSON.stringify(obj));
+        }).catch(function (error) {
+            if (error.response.status === 400) {
+                alert('Adresa de email a fost deja folosita');
+            } else {
+                alert ('Server inaccesibil');
+            }
+
+        });
+        alert('sent!');
+        location.reload();
+    }
+}
+
+const checkPassword = (pass, conf) => {
+    if (pass !== conf)  {
+        alert('Confirmarea parolei esuata');
+        return false;
+    }
+    else
+        return btoa(pass);
+
+} 
 
 
+// Standalone
 
-
-
+if (storage.getItem('credentials') !== null) {
+    const data = storage.getItem('credentials');
+    console.log(data);
+    handleLogin(JSON.parse(data));
+}
