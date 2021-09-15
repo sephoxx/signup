@@ -9,10 +9,6 @@ document.getElementsByClassName('replace')[1].innerHTML= owner[0];
 
 // Post-Authentication
 
-const postAuth = (response) => {
-    document.documentElement.innerHTML= response.data;
-}
-
 // Main
 
 const handleSwitch = (isLogin = false) => {
@@ -115,7 +111,7 @@ const handleLogin = (data = {}) => {
     console.log(data)
     axios.post('http://192.168.0.1:3000/login', `email=${data.email}&password=${data.password}`).then(function (response) {
         storage.setItem('credentials', JSON.stringify(data));
-        postAuth(response);
+        window.location = 'http://infodisplay.local/page';
     }).catch(function (error) {
         alert("Datele introduse sunt gresite.");
         console.log(error);
