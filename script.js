@@ -111,7 +111,7 @@ const handleLogin = (data = {}) => {
     console.log(data)
     axios.post('http://192.168.0.1:3000/login', `email=${data.email}&password=${data.password}`).then(function (response) {
         storage.setItem('credentials', JSON.stringify(data));
-        window.location = 'http://infodisplay.local/page';
+        window.location = `http://${location.hostname}/page`;
     }).catch(function (error) {
         alert("Datele introduse sunt gresite.");
         console.log(error);
