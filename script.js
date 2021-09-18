@@ -53,11 +53,11 @@ const handleSwitch = (isLogin = false) => {
         form.innerHTML = `
         <div class="inputContainer">
         <div class="label">Email:</div>
-        <input type="email" class="formInput" placeholder="numele si prenumele"></input>
+        <input type="email" class="formInput" placeholder="email"></input>
         </div>
         <div class="inputContainer">
         <div class="label">Parola:</div>
-        <input type="password" class="formInput" placeholder="denumire"></input>
+        <input type="password" class="formInput" placeholder="parola"></input>
         </div>
         <div class="inputContainer">
         <button class="sendBtn" onclick="loginSubmit()"><b>Log-in</b></button>
