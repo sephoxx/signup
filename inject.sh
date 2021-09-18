@@ -1,6 +1,6 @@
 #!/bin/bash
 
-sudo wget -k -p -c -E -F http://infodisplay.live -P /var/www/html/signup/
+sudo wget -k -p -c -E -F http://infodisplay.live?page_id=9546 -P /var/www/html/signup/
 
 if [[ $? == 0 ]]
 then
