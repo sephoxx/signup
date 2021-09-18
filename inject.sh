@@ -1,8 +1,8 @@
 #!/bin/bash
 
-wget -k -p -c -E -F http://infodisplay.live
+wget -k -p -c -E -F http://infodisplay.live -P /var/www/html/signup/infodisplay.local
 
-if [[ $? == 0]]
+if [[ $? == 0 ]]
 then
 rm -rf page
 
