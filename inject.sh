@@ -1,8 +1,8 @@
 #!/bin/bash
 
-rm -rf page
-
 wget -k -p -c -E -F http://infodisplay.live
+
+rm -rf page
 
 mkdir page
 
