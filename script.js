@@ -24,7 +24,19 @@ const handleSwitch = (isLogin = false) => {
         <div class="inputContainer">
         <div class="label">Clasa/grupa la care este inscris copilul :
         </div>
-        <input type="text" class="formInput" placeholder="denumire"></input>
+        <select class="formInput" name="group" id="formGroup">
+        <option value="gMicaA">Grupa Mica A</option>
+        <option value="gMicaB">Grupa Mica B</option>
+        <option value="gMicaC">Grupa Mica C</option>
+        <option value="gMijlocieA">Grupa Mijlocie A</option>
+        <option value="gMijlocieB">Grupa Mijlocie B</option>
+        <option value="gMareA">Grupa Mare A</option>
+        <option value="gMareB">Grupa Mare B</option>
+        <option value="gMareC">Grupa Mare C</option>
+        <option value="gMareD">Grupa Mare D</option>
+
+        
+        </select>
         </div>
         <div class="inputContainer">
         <div class="label">Adresa de email:</div>
@@ -40,7 +52,10 @@ const handleSwitch = (isLogin = false) => {
         </div>
         <div class="inputContainer">
         <div class="label">Acord de informare digitala:</div>
-        <textarea type="text" class="formInput textArea" placeholder="sunt de acord cu informarea in sistem digital in proximitatea Unitatii Scolare"></textarea>
+        <div class="formCheck">
+        <input type="checkbox" id="gdpr" class="formCheckBox">
+        <label class="checkLabel" for="gdpr">Sunt de acord cu informarea in sistem digital in proximitatea Unitatii Scolare.</label>
+        </div>
         </div>
         <div class="inputContainer">
         <button class="sendBtn" onclick="handleSign()"><b>Send</b></button>
@@ -53,11 +68,11 @@ const handleSwitch = (isLogin = false) => {
         form.innerHTML = `
         <div class="inputContainer">
         <div class="label">Email:</div>
-        <input type="email" class="formInput" placeholder="email"></input>
+        <input type="email" class="formInput" placeholder="numele si prenumele"></input>
         </div>
         <div class="inputContainer">
         <div class="label">Parola:</div>
-        <input type="password" class="formInput" placeholder="parola"></input>
+        <input type="password" class="formInput" placeholder="denumire"></input>
         </div>
         <div class="inputContainer">
         <button class="sendBtn" onclick="loginSubmit()"><b>Log-in</b></button>
@@ -73,6 +88,7 @@ handleSwitch();
 
 const handleSign = () => {
     const inputs = document.getElementsByClassName('formInput');
+    const check = document.getElementsByClassName('formCheckBox');
     let ok = true;
 
     Array.from(inputs).forEach(i => {
@@ -81,9 +97,14 @@ const handleSign = () => {
         }   
     })
 
-    if (inputs[3].value.length < 7) {
+    if (inputs[2].value.length < 7) {
         ok = false;
         alert('Parola prea scurta ( minim 7 caractere )');
+        return;
+    }
+
+    if (!check[0].checked) {
+        alert('Conditiile pentru crearea contului nu sunt acceptate.')
         return;
     }
 
@@ -99,7 +120,8 @@ const loginSubmit = () => {
     inputs = document.getElementsByClassName('formInput');
     const data = {
         email: inputs[0].value,
-        password: btoa(inputs[1].value)
+        password: btoa(inputs[1].value),
+        class: ""
     }
 
     console.log(data);
@@ -110,8 +132,9 @@ const loginSubmit = () => {
 const handleLogin = (data = {}) => {
     console.log(data)
     axios.post('http://192.168.0.1:3000/login', `email=${data.email}&password=${data.password}`).then(function (response) {
+        data.class= response.data;
         storage.setItem('credentials', JSON.stringify(data));
-        window.location = `http://${location.hostname}/page`;
+        window.location = `http://${location.hostname}/${response.data}`;
     }).catch(function (error) {
         alert("Datele introduse sunt gresite.");
         console.log(error);
@@ -125,13 +148,12 @@ const initAuth = (inputs = []) => {
     if (ok) {
         let obj = {
             name: inputs[0].value,
-            childClass : inputs[1].value,
+            childClass :inputs[1].options[inputs[1].selectedIndex].value,
             email: inputs[2].value,
             password: checkPassword(inputs[3].value, inputs[4].value),
-            gdpr: inputs[5].value
         }
     
-        axios.post('http://192.168.0.1:3000/setAuth', `name=${obj.name}&email=${obj.email}&password=${obj.password}`).then(function (respone) {
+        axios.post('http://192.168.0.1:3000/setAuth', `name=${obj.name}&class=${obj.childClass}&email=${obj.email}&password=${obj.password}`).then(function (respone) {
             storage.setItem('credentials', JSON.stringify(obj));
         }).catch(function (error) {
             if (error.response.status === 400) {
