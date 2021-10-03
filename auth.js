@@ -5,6 +5,10 @@ console.log(data);
 
 data = JSON.parse(data);
 
+if (data === null) {
+	window.location = loginURL;
+}
+
 const formData = new FormData();
 formData.append('email', data.email);
 formData.append('password', data.password)
@@ -20,9 +24,7 @@ function urlencodeFormData(fd){
     return s;
 }
 
-if (data === null) {
-	window.location = loginURL;
-}
+
 
 
 var xhr = new XMLHttpRequest();
