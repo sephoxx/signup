@@ -1,4 +1,5 @@
 const url = 'http://192.168.0.1:3000/login'
+const loginURL = `http://${location.hostname}/signup/index.html`;
 let data = window.localStorage.getItem('credentials');
 console.log(data);
 
@@ -28,14 +29,22 @@ xhr.onreadystatechange = function () {
 	if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
 		console.log(xhr.response);
 		if (!window.location.href.includes(xhr.response)) {
-			// window.location = `http://${location.hostname}/${response.data}`
+			window.location = `http://${location.hostname}/${response.data}`
 			console.log('redirect')
 		} else {
 			console.log('all good');
 		}
 	}
 	else if (this.status === 400) {
-		console.log('Something went wrong')
+		console.log('Something went wrong');
+		if (data !== null)
+		{
+			window.localStorage.clear();
+			window.location = loginURL;
+		}
+	}
+	else if (this.status === 404) {
+		document.getElementsByTagName('html')[0].innerHTML = '';
 	}
 }
 
