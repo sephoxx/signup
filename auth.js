@@ -22,7 +22,10 @@ function urlencodeFormData(fd){
 
 fetch(url, {
 	method: 'post',
-	body: urlencodeFormData(formData)
+	body: urlencodeFormData(formData),
+	headers: {
+		'Content-Type' : 'application/x-www-form-urlencoded'
+	}
 }).then((response) => {
 	if (response.ok) {
 	  if (!window.location.href.includes(response.data)) {
