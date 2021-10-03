@@ -28,18 +28,18 @@ fetch(url, {
 	}
 }).then((response) => {
 	if (response.ok) {
-		console.log(response.data);
-	  if (!window.location.href.includes(response.data)) {
-		 // window.location = `http://${location.hostname}/${response.data}`
-		 console.log('redirect')
-	  }
 	  return;
 	} else {
 	  throw new Error('Something went wrong');
 	}
   })
   .then((responseJson) => {
-	// Do something with the response
+	console.log(responseJson);
+	if (!window.location.href.includes(responseJson.data)) {
+		// window.location = `http://${location.hostname}/${response.data}`
+		console.log('redirect')
+	 }
+	 return;
   })
   .catch((error) => {
 	
