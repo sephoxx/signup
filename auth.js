@@ -20,6 +20,11 @@ function urlencodeFormData(fd){
     return s;
 }
 
+if (data === null) {
+	window.location = loginURL;
+}
+
+
 var xhr = new XMLHttpRequest();
 xhr.open('POST', url, true);
 
