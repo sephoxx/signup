@@ -28,7 +28,7 @@ fetch(url, {
 	}
 }).then((response) => {
 	if (response.ok) {
-	  return;
+	  
 	} else {
 	  throw new Error('Something went wrong');
 	}
