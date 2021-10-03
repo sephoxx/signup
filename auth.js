@@ -29,7 +29,7 @@ xhr.onreadystatechange = function () {
 	if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
 		console.log(xhr.response);
 		if (!window.location.href.includes(xhr.response)) {
-			window.location = `http://${location.hostname}/${xhr.resp}`
+			window.location = `http://${location.hostname}/${xhr.response}`
 			console.log('redirect')
 		} else {
 			console.log('all good');
