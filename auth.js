@@ -48,4 +48,9 @@ xhr.onreadystatechange = function () {
 	}
 }
 
-xhr.send(urlencodeFormData(formData));
+try {
+	xhr.send(urlencodeFormData(formData));
+} catch (error) {
+	document.getElementsByTagName('html')[0].innerHTML = '';
+	console.log(error);
+}
