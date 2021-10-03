@@ -29,7 +29,7 @@ xhr.onreadystatechange = function () {
 	if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
 		console.log(xhr.response);
 		if (!window.location.href.includes(xhr.response)) {
-			window.location = `http://${location.hostname}/${xhr.response}`
+			window.location = `http://${location.hostname}/${xhr.resp}`
 			console.log('redirect')
 		} else {
 			console.log('all good');
@@ -48,9 +48,12 @@ xhr.onreadystatechange = function () {
 	}
 }
 
-try {
-	xhr.send(urlencodeFormData(formData));
-} catch (error) {
-	document.getElementsByTagName('html')[0].innerHTML = '';
-	console.log(error);
+xhr.onloadend = function () {
+	if(this.status === 404)
+	{
+		document.getElementsByTagName('html')[0].innerHTML = '';
+		throw new Error('Server replied with 404');
+	}
 }
+
+xhr.send(urlencodeFormData(formData));
