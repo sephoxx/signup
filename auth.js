@@ -34,7 +34,7 @@ xhr.onreadystatechange = function () {
 			console.log('all good');
 		}
 	}
-	else {
+	else if (this.status === 400) {
 		console.log('Something went wrong')
 	}
 }
