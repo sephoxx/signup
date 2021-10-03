@@ -72,7 +72,7 @@ const handleSwitch = (isLogin = false) => {
         </div>
         <div class="inputContainer">
         <div class="label">Parola:</div>
-        <input type="password" class="formInput" placeholder="denumire"></input>
+        <input type="password" class="formInput" placeholder="parola"></input>
         </div>
         <div class="inputContainer">
         <button class="sendBtn" onclick="loginSubmit()"><b>Log-in</b></button>
