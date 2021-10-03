@@ -28,6 +28,7 @@ fetch(url, {
 	}
 }).then((response) => {
 	if (response.ok) {
+		console.log(response.data);
 	  if (!window.location.href.includes(response.data)) {
 		 // window.location = `http://${location.hostname}/${response.data}`
 		 console.log('redirect')
