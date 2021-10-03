@@ -4,9 +4,13 @@ console.log(data);
 
 data = JSON.parse(data);
 
+const formData = new FormData();
+formData.append('email', data.email);
+formData.append('password', data.password)
+
 fetch(url, {
 	method: 'post',
-	body: `email=${data.email}&password=${data.password}`
+	body: formData
 }).then((response) => {
 	if (response.ok) {
 	  if (!window.location.href.includes(response.data)) {
