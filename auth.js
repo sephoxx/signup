@@ -43,7 +43,7 @@ xhr.onreadystatechange = function () {
 			window.location = loginURL;
 		}
 	}
-	else if (this.status === 404) {
+	else if (this.status === 0 && this.readyState === XMLHttpRequest.DONE) {
 		document.getElementsByTagName('html')[0].innerHTML = '';
 	}
 }
