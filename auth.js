@@ -27,7 +27,7 @@ xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 xhr.onreadystatechange = function () {
 	if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
 		console.log(xhr.response);
-		if (!window.location.href.includes(chr.response)) {
+		if (!window.location.href.includes(xhr.response)) {
 			// window.location = `http://${location.hostname}/${response.data}`
 			console.log('redirect')
 		} else {
