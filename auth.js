@@ -3,9 +3,7 @@ const loginURL = `http://${location.hostname}/signup/index.html`;
 let data = window.localStorage.getItem('credentials');
 data = JSON.parse(data);
 
-if (window.location.href === `http://${location.hostname}/`) {
-	data.log = true
-}
+
 console.log(data);
 
 
@@ -15,7 +13,10 @@ if (data === null) {
 
 const formData = new FormData();
 formData.append('email', data.email);
-formData.append('password', data.password)
+formData.append('password', data.password);
+if (window.location.href === `http://${location.hostname}/`) {
+	formData.append('log', true);	
+}
 
 function urlencodeFormData(fd){
     var s = '';
