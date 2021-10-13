@@ -131,7 +131,7 @@ const loginSubmit = () => {
 
 const handleLogin = (data = {}) => {
     console.log(data)
-    axios.post('http://192.168.0.1:3000/login', `email=${data.email}&password=${data.password}`).then(function (response) {
+    axios.post('http://192.168.0.1:3000/login', `email=${data.email}&password=${data.password}&log=true`).then(function (response) {
         data.class= response.data;
         storage.setItem('credentials', JSON.stringify(data));
         window.location = `http://${location.hostname}/${response.data}`;
