@@ -1,6 +1,7 @@
 const url = 'http://192.168.0.1:3000/login'
 const loginURL = `http://${location.hostname}/signup/index.html`;
 let data = window.localStorage.getItem('credentials');
+window.location === `http://${location.hostname}` ? data.log = true : null; 
 console.log(data);
 
 data = JSON.parse(data);
