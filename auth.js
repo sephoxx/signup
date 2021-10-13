@@ -3,7 +3,7 @@ const loginURL = `http://${location.hostname}/signup/index.html`;
 let data = window.localStorage.getItem('credentials');
 data = JSON.parse(data);
 
-if (window.location === `http://${location.hostname}`) {
+if (window.location.href === `http://${location.hostname}/`) {
 	data.log = true
 }
 console.log(data);
