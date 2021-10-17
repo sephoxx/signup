@@ -5,7 +5,7 @@ const html = `
     </div>
 `
 
-let elementor = document.getElementsByClassName('element-col-33');
+let elementor = document.getElementsByClassName('elementor-col-33');
 elementor = elementor[elementor.length - 1];
 elementor.innerHTML = "SALUT!";
 
