@@ -1,6 +1,6 @@
 const html = `
 <div class='mainContainer'>
-            <input id='file' type='file']>
+            <input id='file' type='file'>
             <button onclick="send()">submit</button>
     </div>
 `
