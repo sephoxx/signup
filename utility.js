@@ -5,7 +5,12 @@ const html = `
     </div>
 `
 
-const targetFile = document.getElementById('file').value;
+let elementor = document.getElementsByClassName('element-col-33');
+elementor = elementor[elementor.length - 1];
+elementor.innerHTML = "SALUT!";
+
+
+// const targetFile = document.getElementById('file').value;
 
 function send () {
     var xhr = new XMLHttpRequest();
