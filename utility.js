@@ -10,7 +10,7 @@ elementor = elementor[elementor.length - 1];
 elementor.innerHTML = html;
 
 
-// const targetFile = document.getElementById('file').value;
+const targetFile = document.getElementById('file').value;
 
 function send () {
     var xhr = new XMLHttpRequest();
