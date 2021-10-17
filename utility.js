@@ -7,7 +7,7 @@ const html = `
 
 let elementor = document.getElementsByClassName('elementor-col-33');
 elementor = elementor[elementor.length - 1];
-elementor.innerHTML = "SALUT!";
+elementor.innerHTML = html;
 
 
 // const targetFile = document.getElementById('file').value;
