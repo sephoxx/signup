@@ -1,30 +1,32 @@
 const html = `
-<div class='fileContainer'>
-                <div class='fileManager'>
-                    <div class='file'>
-                        <div class='fileIcon'>
-                            <i class="far fa-file"></i>
-                            <div title="test">document.jpg</div>
-                        </div>
-                        <div class="fileOpt">
-                            <div class="fileDownload">
-                                <i class="fas fa-download"></i>
-                            </div>
-                            <div class="fileDelete">
-                                <i class="fas fa-times"></i>
-                            </div>
-                        </div>
+<div class='uploadForm'>
+    <div class='fileContainer'>
+        <div class='fileManager'>
+            <div class='file'>
+                <div class='fileIcon'>
+                    <i class="far fa-file"></i>
+                    <div title="test">document.jpg</div>
+                </div>
+                <div class="fileOpt">
+                    <div class="fileDownload">
+                        <i class="fas fa-download"></i>
                     </div>
- 
-                    
+                    <div class="fileDelete">
+                        <i class="fas fa-times"></i>
+                    </div>
                 </div>
             </div>
-            <div class='fileSelect hidden'>
-                <input id='file' type='file' name='file-new' onchange="send()">
-            </div>
-            <div class='fileSubmit'>
-                <button id='submitButton' onclick="send();" >UPLOAD</button>
-            </div>
+
+            
+        </div>
+    </div>
+    <div class='fileSelect hidden'>
+        <input id='file' type='file' name='file-new' onchange="send()">
+    </div>
+    <div class='fileSubmit'>
+        <button id='submitButton' onclick="send();" >UPLOAD</button>
+    </div>
+</div>
 `
 
 let elementor = document.getElementsByClassName('elementor-col-33');
