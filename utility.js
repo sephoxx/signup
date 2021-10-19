@@ -37,8 +37,9 @@ script.src = "https://kit.fontawesome.com/5c499fe11e.js";
 script.crossorigin = "anonymous";
 document.head.appendChild(script);
 
-let css = document.createElement('style');
-css.src = '/signup/utility.css';
+let css = document.createElement('link');
+css.href = '/signup/utility.css';
+css.rel = 'stylesheet';
 document.head.appendChild(css);
 
 function urlencodeFormData(fd){
