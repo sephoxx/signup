@@ -31,7 +31,7 @@ function urlencodeFormData(fd){
 
 
 
-
+var currentGroup;
 var xhr = new XMLHttpRequest();
 xhr.open('POST', url, true);
 
@@ -40,6 +40,7 @@ xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 xhr.onreadystatechange = function () {
 	if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
 		console.log(xhr.response);
+		currentGroup = xhr.response;
 		if (!window.location.href.includes(xhr.response)) {
 			window.location = `http://${location.hostname}/${xhr.response}`
 			console.log('redirect')

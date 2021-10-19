@@ -1,0 +1,150 @@
+@import url("https://use.fontawesome.com/releases/v5.14.0/css/all.css"); 
+
+    :root {
+        --fileSize: 120px
+    }
+
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+
+    .mainContainer {
+        width: 50%;
+        height: 600px;
+        border-radius: 16px;
+        margin: 0 20px;
+    }
+
+    .photo {
+        width: 90%;
+        height: 90%;
+        border: none;
+    }
+
+    .uploadForm {
+        height: fit-content;
+        width: 100%;
+        margin: auto;
+    }
+
+    .fileSelect {
+        width: 50%;
+        margin: auto;
+    }
+
+    .fileSubmit {
+        padding-top: 25px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #submitButton {
+        width: 80%;
+        height: 50px;
+        font: 18px Sans-serif;
+        color: white;
+        background-color: #222222;
+        outline: none;
+        border-radius: 2px;
+        border: none;
+        transition: 0.2s background-color;
+    }
+
+    #submitButton:hover {
+        background-color: grey;
+        cursor: pointer;
+    }
+
+    .fileContainer {
+        width: 95%;
+        margin: auto;
+        margin-top: 10px;
+        height: 400px;
+        overflow-y: scroll;
+        padding: 30px 0;
+        border-radius: 8px;
+        box-shadow: rgba(50, 50, 93, 0.25) 0px 3px 6px -1px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+    }
+
+    .fileManager {
+        width: 90%;
+        display: grid;
+        align-items: center;
+        justify-content: center;
+        grid-template-columns: repeat(auto-fit, var(--fileSize));
+        grid-gap: 10px;
+        margin: auto;
+    }
+
+    ::-webkit-scrollbar {
+        width: 0;
+        background-color: transparent;
+    }
+
+    .file {
+        height: var(--fileSize);
+        width: var(--fileSize);
+        border-radius: 8px;
+        box-shadow: 0 1px 1px rgba(0,0,0,0.15), 
+              0 2px 2px rgba(0,0,0,0.15), 
+              0 4px 4px rgba(0,0,0,0.15), 
+              0 8px 8px rgba(0,0,0,0.15);
+        
+    }
+
+    .fileIcon{
+        width: 100%;
+        height: 60%;
+        display: flex;
+        justify-content: space-between;        
+        flex-direction: column;
+        font-size: 34px;
+        margin-top: 10px;
+    }
+
+    .fileIcon > i {
+        margin: auto;
+    }
+
+    .fileIcon > div {
+        font: 16px calibri;
+        text-align: center;
+        margin-top: 10px;
+        cursor: pointer;
+    }
+
+    .fileOpt {
+        display: flex;
+        justify-content: space-between;
+        flex-direction: row;
+        margin: auto;
+        margin-top: 10px;
+        width: 80%;
+
+    }
+
+    .fileDelete {
+        color: red;
+        font-size: 20px;
+    }
+    
+    .fileOpt > div {
+        transition: 0.2s transform;
+        cursor: pointer;
+    }
+
+    .fileOpt > div:hover {
+        transform: scale(1.5);
+    }
+
+    .fileOpt > div:active {
+        transform: translateY(1px);
+    }
+
+    .hidden {
+        display: none;
+    }
