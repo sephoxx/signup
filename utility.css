@@ -58,8 +58,16 @@ body {
     background-color: #339AF0;
 }
 
+.inProgress:focus {
+    background-color: #339AF0 !important; 
+}
+
 .done {
     background-color: greenyellow;
+}
+
+.done:focus {
+    background-color: greenyellow !important;
 }
 
 .submitButton:hover {
@@ -160,5 +168,9 @@ body {
 
 .error {
     background-color: rgb(252, 134, 113);
+}
+
+.error:focus {
+    background-color: rgb(252, 134, 113) !important;
 }
 
