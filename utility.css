@@ -51,7 +51,7 @@ body {
     outline: none;
     border-radius: 2px;
     border: none;
-    transition: 0.2s background-color;
+    transition: 0.2s background-color, 0.2s transform;
 }
 
 .inProgress {
@@ -63,7 +63,7 @@ body {
 }
 
 .submitButton:hover {
-    background-color: grey;
+    transform: scale(1.2);
     cursor: pointer;
 }
 
