@@ -24,7 +24,7 @@ const html = `
         <input id='file' type='file' name='file-new' onchange="send()">
     </div>
     <div class='fileSubmit'>
-        <button id='submitButton' onclick="send();" >INCARCA</button>
+        <button id='submitButton' class='submitButton' onclick="send();" >INCARCA</button>
     </div>
 </div>
 `
