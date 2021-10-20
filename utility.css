@@ -55,7 +55,7 @@ body {
 }
 
 .inProgress {
-    background-color: #339AF0;
+    background-color: #339AF0 !important; 
 }
 
 .inProgress:focus {
@@ -63,7 +63,8 @@ body {
 }
 
 .done {
-    background-color: greenyellow;
+    background-color: greenyellow !important;
+
 }
 
 .done:focus {
@@ -167,7 +168,8 @@ body {
 }
 
 .error {
-    background-color: rgb(252, 134, 113);
+    background-color: rgb(252, 134, 113) !important;
+
 }
 
 .error:focus {
