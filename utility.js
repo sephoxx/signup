@@ -24,7 +24,7 @@ const html = `
         <input id='file' type='file' name='file-new' onchange="send()">
     </div>
     <div class='fileSubmit'>
-        <button id='submitButton' onclick="send();" >UPLOAD</button>
+        <button id='submitButton' onclick="send();" >INCARCA</button>
     </div>
 </div>
 `
@@ -58,6 +58,8 @@ return s;
 
 function getIcon (ext) {
     switch (ext) {
+        case '.pdf' :
+            return `<i class="far fa-file-pdf"></i>`;
         case '.7zip':case '.zip':case '.rar':
             return `<i class="far fa-file-archive"></i>`;
         case '.m4a': case '.flac': case '.mp3': case '.wav': case '.wma': case '.aac': case '.midi': case '.ogg':
@@ -69,6 +71,18 @@ function getIcon (ext) {
         default:
             return `<i class="far fa-file"></i>`;
     }
+}
+
+function showMessage (message, bClass = 'error') {
+    const button = document.getElementById('submitButton');
+
+    button.classList.add(bClass)
+    button.innerText= message;
+
+    setTimeout(() => {
+                button.innerText='INCARCA';
+                button.classList = ['submitButton'];
+    },3000)
 }
 
 function displayFile(fileList) {
@@ -119,20 +133,35 @@ function send () {
 
     if(targetFile.size >= 52428800) {
         document.getElementById('file').value = null;
+        showMessage('Fisierul e mai mare de 50 MB!')
         throw new Error('File size too large');
     }
+
+
+    const button = document.getElementById('submitButton');
+    button.innerText = "SE INCARCA..."
+    button.classList.add('inProgress');
 
     xhr.open('POST', 'http://192.168.0.1:3000/upload', true);
 
     //xhr.setRequestHeader("Content-type", "multipart/form-data");
 
-
-
     xhr.onloadend = function () {
         if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
             document.getElementById('file').value = null;
-
             getFiles();
+
+            button.innerText = 'SUCCESS';
+            button.classList.remove('inProgress');
+            button.classList.add('done');
+
+            setTimeout(() => {
+                button.innerText='INCARCA';
+                button.classList.remove('done');
+            },3000)
+        } else {
+            showMessage('Eroare Server: Fisierul nu a fost incarcat.');
+            throw new Error('Server error.')
         }
     }
 
