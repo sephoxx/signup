@@ -63,12 +63,12 @@ body {
 }
 
 .done {
-    background-color: greenyellow !important;
+    background-color: rgb(131, 199, 28) !important;
 
 }
 
 .done:focus {
-    background-color: greenyellow !important;
+    background-color: rgb(131, 199, 28) !important;
 }
 
 .submitButton:hover {
