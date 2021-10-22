@@ -51,6 +51,11 @@ script.src = "https://kit.fontawesome.com/5c499fe11e.js";
 script.crossorigin = "anonymous";
 document.head.appendChild(script);
 
+let css = document.createElement('link');
+script.href = "/signup/utility.css";
+script.rel = "stylesheet";
+document.head.appendChild(css);
+
 function urlencodeFormData(fd){
 var s = '';
 function encode(s){ return encodeURIComponent(s).replace(/%20/g,'+'); }
