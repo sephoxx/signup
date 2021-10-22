@@ -1,5 +1,5 @@
 const html = `
-<div class='uploadForm'>
+<div class='uploadForm' ondrop="handleDrop(event)" ondragover="handleDrag(event)" ondragenter="handleDragEnter(event)" ondragleave="handleDragLeave(event)">
 <div class='fileContainer'>
     <div class='fileManager'>
         <div class='file'>
