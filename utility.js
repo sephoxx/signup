@@ -264,7 +264,7 @@ function send (file) {
             button.classList.add('done');
 
             setTimeout(() => {
-                button.innerText='INCARCA';
+                button.innerText='INCARCA PE ID4K!';
                 button.classList.remove('done');
             },3000)
         } else {
