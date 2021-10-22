@@ -3,6 +3,11 @@ const loginURL = `http://${location.hostname}/signup/index.html`;
 let data = window.localStorage.getItem('credentials');
 data = JSON.parse(data);
 
+let css = document.createElement('link');
+css.href = "/signup/utility.css";
+css.rel = "stylesheet";
+document.head.appendChild(css);
+
 
 console.log(data);
 
