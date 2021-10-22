@@ -97,7 +97,7 @@ const handleSign = () => {
         }   
     })
 
-    if (inputs[2].value.length < 7) {
+    if (inputs[3].value.length < 7) {
         ok = false;
         alert('Parola prea scurta ( minim 7 caractere )');
         return;
