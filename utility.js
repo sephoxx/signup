@@ -52,8 +52,8 @@ script.crossorigin = "anonymous";
 document.head.appendChild(script);
 
 let css = document.createElement('link');
-script.href = "/signup/utility.css";
-script.rel = "stylesheet";
+css.href = "/signup/utility.css";
+css.rel = "stylesheet";
 document.head.appendChild(css);
 
 function urlencodeFormData(fd){
