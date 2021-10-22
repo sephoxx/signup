@@ -1,31 +1,37 @@
 const html = `
 <div class='uploadForm'>
-    <div class='fileContainer'>
-        <div class='fileManager'>
-            <div class='file'>
-                <div class='fileIcon'>
-                    <i class="far fa-file"></i>
-                    <div title="test">document.jpg</div>
+<div class='fileContainer'>
+    <div class='fileManager'>
+        <div class='file'>
+            <div class='fileIcon'>
+                <i class="far fa-file"></i>
+                <div title="test">document.jpg</div>
+            </div>
+            <div class="fileOpt">
+                <div class="fileDownload">
+                    <i class="fas fa-download"></i>
                 </div>
-                <div class="fileOpt">
-                    <div class="fileDownload">
-                        <i class="fas fa-download"></i>
-                    </div>
-                    <div class="fileDelete">
-                        <i class="fas fa-times"></i>
-                    </div>
+                <div class="fileDelete">
+                    <i class="fas fa-times"></i>
                 </div>
             </div>
-
-            
         </div>
+
+        
     </div>
-    <div class='fileSelect hidden'>
-        <input id='file' type='file' name='file-new' onchange="send()">
+</div>
+<div class='sizeContainer'>
+    <div class='sizeInfo'>SPATIU FOLOSIT/RAMAS</div>
+    <div class='sizeBar'>
+        <div id='progressBar'></div>
     </div>
-    <div class='fileSubmit'>
-        <button id='submitButton' class='submitButton' onclick="send();" >INCARCA</button>
-    </div>
+</div>
+<div class='fileSelect hidden'>
+    <input id='file' type='file' name='file-new' onchange="send()">
+</div>
+<div class='fileSubmit'>
+    <button id='submitButton' class='submitButton' onclick="send();" >INCARCA</button>
+</div>
 </div>
 `
 
@@ -34,15 +40,16 @@ elementor = elementor[elementor.length - 1];
 elementor.innerHTML = html;
 
 
+const types = ['.jpg', '.png', '.bmp', '.gif'];
+let totalSize;
+const sizeLimit = 500;
+let dragCounter = 0;
+
+
 let script = document.createElement('script');
 script.src = "https://kit.fontawesome.com/5c499fe11e.js";
 script.crossorigin = "anonymous";
 document.head.appendChild(script);
-
-let css = document.createElement('link');
-css.href = '/signup/utility.css';
-css.rel = 'stylesheet';
-document.head.appendChild(css);
 
 function urlencodeFormData(fd){
 var s = '';
@@ -53,10 +60,80 @@ for(var pair of fd.entries()){
     }
 }
 return s;
+}   
+
+function handleDragEnter(ev) {
+    console.log('enter')
+
+    if (ev.dataTransfer.items) {
+        Array.from(ev.dataTransfer.items).forEach(file => {
+            if (file.kind === 'file') {
+                const window = document.getElementsByClassName('fileContainer')[0];
+                
+                window.classList.add('blur');
+                dragCounter++;
+            }
+        })
+    }
 }
 
+function handleDragLeave(ev) {
+    dragCounter--;
+    console.log('leave')
+    if (ev.dataTransfer.items) {
+        Array.from(ev.dataTransfer.items).forEach(file => {
+            if (file.kind === 'file'  && dragCounter === 0) {
+                const window = document.getElementsByClassName('fileContainer')[0];
+                
+                window.classList.remove('blur');
+            }
+        })
+    }
+}
 
-function getIcon (ext) {
+function handleDrag (ev) {
+    ev.preventDefault();
+}
+
+function handleDrop (ev) {
+    console.log('Files Dropped!')
+    ev.preventDefault();
+    dragCounter = 0;
+    const window = document.getElementsByClassName('fileContainer')[0];
+                
+    window.classList.remove('blur');
+
+
+
+    if (ev.dataTransfer.items) {
+        Array.from(ev.dataTransfer.items).forEach(file => {
+            if (file.kind === 'file') {
+                const outFile = file.getAsFile();
+                send(outFile); 
+            }
+        })
+    } else {
+        throw new Error('Dragged data is not a file');
+    }
+}
+
+function getMB (size) {
+    return size / Math.pow(1024,2);
+}
+
+function setSize (size) {
+    const bar = document.getElementById('progressBar');     
+    const info = document.getElementsByClassName('sizeInfo')[0];
+
+    size = getMB(size);
+    let percent = ( size / sizeLimit ) * 100;
+
+    bar.style.width = `${percent}%`;
+    info.innerText = `${size.toFixed(2)}Mb / ${sizeLimit}Mb ( ${percent.toFixed(0)}% )`;
+    console.log(size, percent);
+}
+
+function getIcon (ext , filename, index) {
     switch (ext) {
         case '.pdf' :
             return `<i class="far fa-file-pdf"></i>`;
@@ -67,10 +144,26 @@ function getIcon (ext) {
         case'.mp4': case'.mov': case'.wmv': case '.avi': case'.mkv':
             return `<i class="far fa-file-video"></i>`;
         case '.jpg': case '.jpeg': case '.png': case '.bmp': case '.gif':
-            return `<i class="far fa-file-image"></i>`;
+            return `<div class='spacer'></div>`;
         default:
             return `<i class="far fa-file"></i>`;
     }
+}
+
+function handlePhoto (filename, index) {
+    const file = document.getElementsByClassName('file')[index];
+    
+    file.style.backgroundImage = `linear-gradient(to top, rgba(255,255,255, 1) 0%, rgba(0,0,0, 0) 120%), url('http://gradinita122.live/uploads/${currentGroup}/${encodeURI(filename)}') `;
+    file.style.backgroundPosition = 'center';
+    file.style.backgroundSize = 'cover';
+
+
+}
+
+function unfocus () {
+    const tmp = document.createElement('button');
+    tmp.classList.add('hidden');
+    tmp.focus()
 }
 
 function showMessage (message, bClass = 'error') {
@@ -88,14 +181,15 @@ function showMessage (message, bClass = 'error') {
 function displayFile(fileList) {
     const manager = document.getElementsByClassName('fileManager')[0];
     manager.innerHTML = '';
+    totalSize = 0;
 
+    fileList.forEach((file, index) => {
+        const charLimit = 14;
 
-    fileList.forEach(file => {
-        const limit = 14;
-
+        totalSize += file.size;
         file.fullname = file.filename;
-        if (file.filename.length > limit) {
-            file.filename = file.filename.substring(0, limit - 1) + '...';
+        if (file.filename.length > charLimit) {
+            file.filename = file.filename.substring(0, charLimit - 1) + '...';
         }
 
         const template = `
@@ -116,19 +210,24 @@ function displayFile(fileList) {
             `;
 
         manager.innerHTML += template;
+        types.find(type => type === file.ext) ? handlePhoto(file.fullname, index) : null;
     })
+
+    setSize(totalSize);
 }
 
 
-function send () {
+function send (file) {
     var xhr = new XMLHttpRequest();
     targetFile = document.getElementById('file').files[0];
 
     console.log(targetFile);
 
-    if (targetFile === undefined) {
+    if (targetFile === undefined && file === undefined) {
         document.getElementById('file').click();
         return;
+    } else if (file !== undefined) {
+        targetFile = file;
     }
 
     if(targetFile.size >= 52428800) {
@@ -137,8 +236,16 @@ function send () {
         throw new Error('File size too large');
     }
 
+    if (getMB(targetFile.size + totalSize) >= sizeLimit) {
+        document.getElementById('file').value = null;
+        showMessage('Server-ul nu mai are spatiu de stocare!');
+        throw new Error('Server storage limit hit!');
+    }
+        
+
 
     const button = document.getElementById('submitButton');
+    unfocus();
     button.innerText = "SE INCARCA..."
     button.classList.add('inProgress');
 
@@ -149,9 +256,10 @@ function send () {
     xhr.onloadend = function () {
         if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
             document.getElementById('file').value = null;
+
             getFiles();
 
-            button.innerText = 'SUCCESS';
+            button.innerText = 'S-A INCARCAT!';
             button.classList.remove('inProgress');
             button.classList.add('done');
 
@@ -166,20 +274,22 @@ function send () {
     }
 
     const data = new FormData();
-    data.append('file', targetFile)
+    data.append('field', currentGroup);
+    data.append('file', targetFile);
+    
 
     xhr.send(data);
 }
 
 function downloadFile(filename) {
-    window.location.assign(`http://192.168.0.1:3000/download?filename=${encodeURIComponent(filename)}`);
+    window.location.assign(`http://192.168.0.1:3000/download?filename=${encodeURIComponent(filename)}&group=${currentGroup}`);
 }
 
 function getFiles () {
     const xhr = new XMLHttpRequest();
     const fileList = [];
 
-    xhr.open('GET', 'http://192.168.0.1:3000/files', true);
+    xhr.open('GET', `http://192.168.0.1:3000/files?group=${currentGroup}`, true);
 
     xhr.onreadystatechange = function () {
         if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
@@ -198,7 +308,7 @@ function deleteFile (filename) {
     const xhr = new XMLHttpRequest();
     const fileList = [];
 
-    xhr.open('GET', 'http://192.168.0.1:3000/delete?filename=' + encodeURI(filename), true);
+    xhr.open('GET', `http://192.168.0.1:3000/delete?filename=${encodeURI(filename)}&group=${currentGroup}`, true);
 
     xhr.onloadend = () => {
         getFiles();
