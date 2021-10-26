@@ -153,7 +153,7 @@ function getIcon (ext , filename, index) {
 function handlePhoto (filename, index) {
     const file = document.getElementsByClassName('file')[index];
     
-    file.style.backgroundImage = `linear-gradient(to top, rgba(255,255,255, 1) 0%, rgba(0,0,0, 0) 120%), url('http://gradinita122.live/uploads/${currentGroup}/${encodeURI(filename)}') `;
+    file.style.backgroundImage = `linear-gradient(to top, rgba(255,255,255, 1) 0%, rgba(0,0,0, 0) 120%), url('http://gradinita122.live/uploads/${currentGroup}/${encodeURI(filename)}?${parseInt(Math.random * 1000)}}') `;
     file.style.backgroundPosition = 'center';
     file.style.backgroundSize = 'cover';
 
