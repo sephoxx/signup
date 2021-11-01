@@ -46,14 +46,14 @@ body {
 
 .submitButton {
     width: 80%;
-    height: 50px;
-    font: 18px Sans-serif;
+    font: 24px Salsa;
     color: white;
     background-color: rgb(93, 213, 250);
     outline: none;
     border-radius: 4px;
     border: none;
     transition: 0.2s background-color;
+    padding: 15px !important;
 }
 
 .inProgress {
