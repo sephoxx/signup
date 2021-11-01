@@ -21,16 +21,13 @@ const html = `
     </div>
 </div>
 <div class='sizeContainer'>
-    <div class='sizeInfo'>SPATIU FOLOSIT/RAMAS</div>
-    <div class='sizeBar'>
-        <div id='progressBar'></div>
-    </div>
+    si dvs. puteti afisa pe ID4K!
 </div>
 <div class='fileSelect hidden'>
     <input id='file' type='file' name='file-new' onchange="send()">
 </div>
 <div class='fileSubmit'>
-    <button id='submitButton' class='submitButton' onclick="send();" >INCARCA PE ID4K!</button>
+    <button id='submitButton' class='submitButton' onclick="send();" >incarca pe ID4K!</button>
 </div>
 </div>
 `
@@ -212,8 +209,6 @@ function displayFile(fileList) {
         manager.innerHTML += template;
         types.find(type => type === file.ext) ? handlePhoto(file.fullname, index) : null;
     })
-
-    setSize(totalSize);
 }
 
 
