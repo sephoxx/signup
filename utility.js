@@ -241,7 +241,7 @@ function send (file) {
 
     const button = document.getElementById('submitButton');
     unfocus();
-    button.innerText = "SE INCARCA..."
+    button.innerText = "se incarca..."
     button.classList.add('inProgress');
 
     xhr.open('POST', 'http://192.168.0.1:3000/upload', true);
@@ -254,12 +254,12 @@ function send (file) {
 
             getFiles();
 
-            button.innerText = 'S-A INCARCAT!';
+            button.innerText = 's-a incarcat!';
             button.classList.remove('inProgress');
             button.classList.add('done');
 
             setTimeout(() => {
-                button.innerText='INCARCA PE ID4K!';
+                button.innerText='incarca pe ID4K!';
                 button.classList.remove('done');
             },3000)
         } else {
