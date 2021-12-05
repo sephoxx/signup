@@ -7,11 +7,7 @@
 }
 
 body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    position: relative;
+    position: relative !important;
 }
 
 .mainContainer {
@@ -220,7 +216,6 @@ body {
 
 .modalContainer {
     width: 100vw;
-    height: 1000px;
     overflow: hidden;
     height: 100vh;
     background-color: rgba(0, 0, 0, 0.3);
@@ -228,6 +223,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 10;
 }
 
 .content {
