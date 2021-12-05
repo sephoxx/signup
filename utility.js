@@ -37,7 +37,7 @@ elementor = elementor[elementor.length - 1];
 elementor.innerHTML = html;
 
 
-const types = ['.jpg', '.png', '.bmp', '.gif'];
+const types = ['.jpg', '.png', '.bmp', '.gif', '.jpeg'];
 let totalSize;
 const sizeLimit = 500;
 let dragCounter = 0;
@@ -311,5 +311,78 @@ function deleteFile (filename) {
 
     xhr.send();
 }
+
+function deleteModal () {
+    document.getElementById('modal').remove();
+}
+
+window.addEventListener('click', e => {
+    if (e.target.getAttribute('id') === 'modal') {
+        deleteModal();
+    }
+})
+
+function setModal (content, ext) {
+    let parser;
+    let type;
+
+    switch (ext) {
+        case '.pdf' :
+            type = `pdf`;
+            break;
+        case '.7zip':case '.zip':case '.rar':
+            type = `zip`;
+            break;
+        case '.m4a': case '.flac': case '.mp3': case '.wav': case '.wma': case '.aac': case '.midi': case '.ogg':
+            type = `aud`;
+            break;
+        case'.mp4': case'.mov': case'.wmv': case '.avi': case'.mkv': case '.mpeg':
+            type = `vid`;
+            break;
+        case '.jpg': case '.jpeg': case '.png': case '.bmp': case '.gif':
+            type = `img`;
+            break;
+        case '.docx': case '.xlsx':
+            type = 'doc';
+            break;
+        default:
+            type = `file`;
+            break;
+    }
+
+    console.log(type);
+
+    
+
+    switch (type) {
+        case 'img':
+            parser = `<img src='http://gradinita122.live/uploads/${currentGroup}/${encodeURI(content)}?#id='`;
+            break;
+        case 'vid':
+            parser = `<video width='100%' controls> <source src='http://gradinita122.live/uploads/${currentGroup}/${encodeURI(content)}?#id='> </video>`
+            break;
+        case 'aud':
+            parser = `<audio controls src='http://gradinita122.live/uploads/${currentGroup}/${encodeURI(content)}?#id='></audio>`
+            break;
+        case 'doc':
+            parser = `<iframe src="https://view.officeapps.live.com/op/embed.aspx?src=http://gradinita122.live/uploads/${currentGroup}/${encodeURI(content)}"></iframe>`;
+            break;
+        default:
+            throw new Error('Unexpected file type.');
+            return;
+    }
+
+    const html = document.createElement('div');
+    html.classList.add('modalContainer')
+    html.setAttribute('id', 'modal');
+
+    
+    html.innerHTML = `
+        <div class='modalContainer' id='modal'>
+            <div class="content">
+                ${parser}
+            </div>
+        </div>
+    `
 
 getFiles();
