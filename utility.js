@@ -384,5 +384,7 @@ function setModal (content, ext) {
             </div>
         </div>
     `
+    document.body.insertBefore(html, document.body.firstChild);
+    }
 
 getFiles();
