@@ -191,7 +191,7 @@ function displayFile(fileList) {
 
         const template = `
             <div class='file'>
-                <div class='fileIcon'>
+                <div class='fileIcon' onclick='setModal("${file.fullname}", "${file.ext}")'>
                     ${getIcon(file.ext)}
                     <div title="${file.fullname}">${file.filename}</div>
                 </div>
