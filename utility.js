@@ -322,6 +322,12 @@ window.addEventListener('click', e => {
     }
 })
 
+window.addEventListener('touchend', e => {
+    if (e.target.getAttribute('id') === 'modal') {
+        deleteModal();
+    }
+})
+
 function setModal (content, ext) {
     let parser;
     let type;
