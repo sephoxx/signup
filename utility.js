@@ -394,3 +394,92 @@ function setModal (content, ext) {
     }
 
 getFiles();
+
+function initOnline() {
+    const html = `
+    <div>
+        <marquee id='online'></marquee>
+    </div>
+    <div>
+        <marquee id='offline'></marquee>
+    </div>
+    `
+
+    const section = document.getElementsByClassName('elementor-section-wrap')[0];
+    const spot = section.getElementsByTagName('section')[0];
+
+    const out = document.createElement('div');
+    out.classList.add('onlineContainer');
+    out.innerHTML = html;
+
+    spot.insertAdjacentElement('afterend',out);
+}
+
+    initOnline();
+
+    function setOnline (log) {
+        let online = document.getElementById('online');
+        let offline = document.getElementById('offline');
+        online.innerHTML = '';
+        offline.innerHTML = '';
+
+        log.active.forEach(user => {
+            const out = `
+            <span class='user'>
+                <span class='apoint'>•</span>
+                <span class='userName'>${user}</span>
+            </span>`
+            user !== null ? online.innerHTML += out : null;
+            
+        })
+
+        log.inactive.forEach(user => {
+            const out = `
+            <span class='user'>
+                <span class='apoint ipoint'>•</span>
+                <span class='userName'>${user}</span>
+            </span>`
+            user !== null ? offline.innerHTML += out : null;
+        })
+
+    }
+
+
+    function initWS () {
+        let ws = new WebSocket('ws://192.168.0.1:3001');
+        let userLog;
+
+        ws.onopen = () => console.log('[*] WS OPENED');
+        ws.onclose = () => {
+            console.log('[*] WS CLOSED')
+            initWS();
+        };
+
+        ws.onmessage = e => {
+            const message = JSON.parse(e.data);
+
+            if (message !== undefined) {
+                userLog = message;
+                setOnline(userLog);
+                console.log(userLog);
+            }
+        }
+
+        const outbound = {
+            action: 'initialize',
+            name: 'test1'
+        }
+
+        function wsSend(outbound) {
+            if (ws.readyState === 1) {
+                ws.send(outbound);
+            }
+            else {
+                setTimeout(() => {wsSend(outbound)}, 100);
+            }
+        }
+
+        wsSend(JSON.stringify(outbound));
+    }
+
+    initWS();

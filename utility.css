@@ -237,3 +237,33 @@ body {
     border-radius: 8px;
     
 }
+
+.onlineContainer {
+    width: 100%;
+    padding: 8px 0;
+    z-index: 0;
+}
+
+.onlineContainer > div {
+    font: 18px sans-serif;
+    padding: 2px 0;
+    height: fit-content;
+}
+
+.apoint {
+    position: absolute;
+    padding: 0 5px;
+    font-size: 40px;
+    color: var(--primary);
+    line-height: 20px;
+    left: -25px;
+}
+
+.user {
+    position: relative;
+    margin: 0 20px
+}
+
+.ipoint {
+    color: grey;
+}
