@@ -469,7 +469,7 @@ function initOnline() {
 
         const outbound = {
             action: 'initialize',
-            name: storage.email;
+            name: storage.email
         }
 
         function wsSend(outbound) {
