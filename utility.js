@@ -465,7 +465,7 @@ function initOnline() {
             }
         }
 
-        const storage = JSON.parse(window.localStorage.getItem(credentials));
+        const storage = JSON.parse(window.localStorage.getItem('credentials'));
 
         const outbound = {
             action: 'initialize',
