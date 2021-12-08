@@ -465,9 +465,11 @@ function initOnline() {
             }
         }
 
+        const storage = JSON.parse(window.localStorage.getItem(credentials));
+
         const outbound = {
             action: 'initialize',
-            name: 'test1'
+            name: storage.email;
         }
 
         function wsSend(outbound) {
