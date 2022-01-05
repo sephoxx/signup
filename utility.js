@@ -412,7 +412,6 @@ function initOnline() {
     spot.insertAdjacentElement('afterend',out);
 }
 
-    initOnline();
 
     function setOnline (log) {
         let online = document.getElementById('online');
