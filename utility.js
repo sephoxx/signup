@@ -1,4 +1,5 @@
-const html = `
+const injection = () => {
+    const html = `
 <div class='uploadForm' ondrop="handleDrop(event)" ondragover="handleDrag(event)" ondragenter="handleDragEnter(event)" ondragleave="handleDragLeave(event)">
 <div class='fileContainer'>
     <div class='fileManager'>
@@ -485,3 +486,6 @@ function initOnline() {
     }
 
     initWS();
+}
+
+setTimeout(injection, 500);
