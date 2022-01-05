@@ -1,5 +1,4 @@
-const injection = () => {
-    const html = `
+const html = `
 <div class='uploadForm' ondrop="handleDrop(event)" ondragover="handleDrag(event)" ondragenter="handleDragEnter(event)" ondragleave="handleDragLeave(event)">
 <div class='fileContainer'>
     <div class='fileManager'>
@@ -33,9 +32,7 @@ const injection = () => {
 </div>
 `
 
-let elementor = document.getElementsByClassName('elementor-col-33');
-elementor = elementor[elementor.length - 1];
-elementor.innerHTML = html;
+
 
 
 const types = ['.jpg', '.png', '.bmp', '.gif', '.jpeg'];
@@ -394,7 +391,6 @@ function setModal (content, ext) {
     document.body.insertBefore(html, document.body.firstChild);
     }
 
-getFiles();
 
 function initOnline() {
     const html = `
@@ -485,7 +481,17 @@ function initOnline() {
         wsSend(JSON.stringify(outbound));
     }
 
-    initWS();
-}
+    
 
-setTimeout(injection, 500);
+    const injection = () => {
+        let elementor = document.getElementsByClassName('elementor-col-33');
+        elementor = elementor[elementor.length - 1];
+        elementor.innerHTML = html;
+        
+        
+        getFiles();
+        initOnline();
+        initWS();
+    }
+
+    setTimeout(injection, 500);
