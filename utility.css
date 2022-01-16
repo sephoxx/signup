@@ -267,3 +267,40 @@ body {
 .ipoint {
     color: grey;
 }
+
+.timestamp {
+    font-size: 12px;
+    padding-left: 3px;
+
+}
+.atime {
+    color: var(--primary);
+}
+
+.itime {
+    color: red;
+}
+
+.userContainer {
+    height: 25px;
+    position: 'relative';
+    display: flex;
+}
+
+.userLabel {
+    background-color: white;
+    font-weight: 800;
+    width: 45px;
+}
+
+#online {
+    padding-top: 4px;
+}
+
+#offline {
+    padding-top: 4px;
+}
+
+.unauthorized {
+    visibility: hidden;
+}

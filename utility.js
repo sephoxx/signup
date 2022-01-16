@@ -173,31 +173,35 @@ function showMessage (message, bClass = 'error') {
     },3000)
 }
 
+function limitName (limit, name) {
+    if (name.length > limit) {
+            name = name.substring(0, limit - 1) + '...';
+        }
+    
+    return name;
+}
+
 function displayFile(fileList) {
     const manager = document.getElementsByClassName('fileManager')[0];
     manager.innerHTML = '';
-    totalSize = 0;
 
     fileList.forEach((file, index) => {
         const charLimit = 14;
-
-        totalSize += file.size;
+        
         file.fullname = file.filename;
-        if (file.filename.length > charLimit) {
-            file.filename = file.filename.substring(0, charLimit - 1) + '...';
-        }
+        
 
         const template = `
             <div class='file'>
                 <div class='fileIcon' onclick='setModal("${file.fullname}", "${file.ext}")'>
                     ${getIcon(file.ext)}
-                    <div title="${file.fullname}">${file.filename}</div>
+                    <div title="${file.fullname}">${limitName(charLimit, (file.filename.split('~')[1] !== undefined ? file.filename.split('~')[1] : file.filename))}</div>
                 </div>
                 <div class="fileOpt">
                     <div class="fileDownload" onclick="downloadFile('${file.fullname}')">
                         <i class="fas fa-download"></i>
                     </div>
-                    <div class="fileDelete" onclick="deleteFile('${file.fullname}')">
+                    <div class="fileDelete ${storage.email === file.fullname.split('~')[0] ? '' : 'unauthorized'}" onclick="deleteFile('${file.fullname}')">
                         <i class="fas fa-times"></i>
                     </div>
                 </div>
@@ -207,8 +211,8 @@ function displayFile(fileList) {
         manager.innerHTML += template;
         types.find(type => type === file.ext) ? handlePhoto(file.fullname, index) : null;
     })
-}
 
+}
 
 function send (file) {
     var xhr = new XMLHttpRequest();
@@ -267,7 +271,11 @@ function send (file) {
     }
 
     const data = new FormData();
-    data.append('field', currentGroup);
+    const fieldData = {
+        group: currentGroup,
+        email: storage.email
+    }
+    data.append('field', JSON.stringify(fieldData));
     data.append('file', targetFile);
     
 
@@ -394,11 +402,17 @@ function setModal (content, ext) {
 
 function initOnline() {
     const html = `
-    <div>
-        <marquee id='online'></marquee>
-    </div>
-    <div>
-        <marquee id='offline'></marquee>
+    <div class='onlineContainer'>
+        <div class="userContainer">
+            <div class="userLabel atime">In:</div>
+
+            <marquee id='online'></marquee>
+        </div>
+        <div class="userContainer">
+            <div class="userLabel itime">Out:</div>
+            <marquee id='offline'></marquee>
+            <!-- <div class="userLabel">In:</div> -->
+        </div>
     </div>
     `
 
@@ -418,22 +432,25 @@ function initOnline() {
         let offline = document.getElementById('offline');
         online.innerHTML = '';
         offline.innerHTML = '';
-
+        
+        console.log(log)
         log.active.forEach(user => {
+            const timestamp = new Date(user.timestamp)
             const out = `
             <span class='user'>
                 <span class='apoint'>•</span>
-                <span class='userName'>${user}</span>
+                <span class='userName'>${user.name}<span class='timestamp atime'>${parseTime(timestamp)}</span></span>
             </span>`
             user !== null ? online.innerHTML += out : null;
             
         })
 
         log.inactive.forEach(user => {
+            timestamp = new Date(user.timestamp);
             const out = `
             <span class='user'>
                 <span class='apoint ipoint'>•</span>
-                <span class='userName'>${user}</span>
+                <span class='userName'>${user.name}<span class='timestamp itime'>${parseTime(timestamp)}</span></span>
             </span>`
             user !== null ? offline.innerHTML += out : null;
         })
