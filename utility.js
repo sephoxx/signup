@@ -426,6 +426,19 @@ function initOnline() {
     spot.insertAdjacentElement('afterend',out);
 }
 
+    function parseTime (time) {
+        let hours = time.getHours();
+        let minutes = time.getMinutes();
+
+        if (parseInt(hours) < 10) {
+            hours = '0' + hours;
+        }
+        if (parseInt(minutes) < 10) {
+            minutes = '0' + minutes;
+        }
+
+        return `${hours}:${minutes}`;
+    }
 
     function setOnline (log) {
         let online = document.getElementById('online');
