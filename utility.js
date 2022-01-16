@@ -40,6 +40,8 @@ let totalSize;
 const sizeLimit = 500;
 let dragCounter = 0;
 
+const storage = JSON.parse(window.localStorage.getItem('credentials'));
+
 
 let script = document.createElement('script');
 script.src = "https://kit.fontawesome.com/5c499fe11e.js";
@@ -491,7 +493,6 @@ function initOnline() {
             }
         }
 
-        const storage = JSON.parse(window.localStorage.getItem('credentials'));
 
         const outbound = {
             action: 'initialize',
